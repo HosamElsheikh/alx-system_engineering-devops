@@ -1,2 +1,2 @@
 #!/bin/bash
-shopt -s nullglob; for f in *.html; do cp -u "$f" ../; done
+cp -u *.html . ..
