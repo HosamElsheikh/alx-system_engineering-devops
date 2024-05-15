@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# a Bash script that accepts one argument
+
+# Check if password is supplied
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mysql-root-password>"
+    exit 1
+fi
+
+sudo -u "$1" whoami
