@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# a Bash script that generates a compressed archive out of database
+
+# Check if password is supplied
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <mysql-root-password>"
+    exit 1
+fi
+
+MYSQL_PWD="$1"
+
+sudo mysqldump -u "root" -p$MYSQL_PWD --all-databases > backup.sql
+
+_date=$(date +"%Y%m%d%H%M%S")
+
+tar -czf "$_date".tar.gz backup.sql
+
+echo "Backup is successfully created:${current_date}.tar.gz"
