@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Start Apache and configure it to return a page containing "Hello Holberton"
+
+# Ensure Apache recognizes the localhost server name
+echo "ServerName localhost" >> /etc/apache2.conf
+
+# Create or overwrite the default index page
+echo "Hello Holberton" > /var/www/html/index.html
+
+# Start the Apache service
+service apache2 start
