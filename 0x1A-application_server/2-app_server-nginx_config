@@ -1,19 +1,27 @@
-# Define the server block for the application
 server {
-
-    # Listen on port 80 for both IPv4 and IPv6
-    listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
-
-    # Define the server name (domain or IP)
-    server_name 54.85.145.154;
-
-    # Add a custom header to responses to identify which server served the request
-    add_header X-Served-By 531295-web-01;
-
-    # Define how to respond to requests for the /airbnb-onepage/ path
-    location /airbnb-onepage/ {
-        # Forward these requests to the app running on localhost port 5000
-        proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+    listen 80;
+    listen [::]:80 default_server;
+    add_header X-Served-By $hostname;
+    root   /etc/nginx/html;
+    index  index.html index.htm;
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
+    root /var/www/html;
+
+    server_name _;
+
+    location /airbnb-onepage {
+        proxy_pass http://0.0.0.0:5000/airbnb-onepage;
+    }
+
+    location /hbnb_static {
+        alias /data/web_static/current/;
+    }
+
+    location /{
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+     }
 }
